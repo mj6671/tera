@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G code</title>
+    <style>
+        /* Your existing styles */
+    </style>
+</head>
+<body>
+    <div class="box">
+        <p class="p">🚀 G code</p>
+        <p>Automate your Instagram with <strong>11RS/. per day</strong></p>
+        <p class="p">G code</p>
+        <p>A site that offers exclusive deals for you</p>
+        <div class="soon">
+            Soon....
+        </div>
+    </div>
+
+    <h1 class="g-code-text">G code</h1>
+
+    <form id="url-form" method="POST">
+        <label for="url">Enter TeraBox Folder URL:</label>
+        <input type="url" id="url" name="url" required placeholder="https://www.terabox.com/s/xyz123">
+        <button type="submit">Fetch Files</button>
+    </form>
+    
+    <div id="response"></div>
+    
+    <script>
+        document.getElementById("url-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const urlInput = document.getElementById("url");
+            const responseDiv = document.getElementById("response");
+    
+            fetch('/url', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ url: urlInput.value })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    responseDiv.innerHTML = `
+                        <p>Download ready: <a href="/download/${data.file_name}" target="_blank">Click here to download</a></p>
+                    `;
+                } else {
+                    responseDiv.textContent = data.error;
+                }
+            })
+            .catch(error => {
+                responseDiv.textContent = `An error occurred: ${error}`;
+            });
+        });
+    </script>
+</body>
+</html>
